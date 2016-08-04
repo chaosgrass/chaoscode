@@ -3,3 +3,5 @@ choco install jdk
 choco install notepadplusplus
 choco install gradle
 choco install sourcetree
+choco install emeditor
+rem 安装groovy.esy语法文件
