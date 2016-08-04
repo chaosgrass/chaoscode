@@ -2,9 +2,13 @@
 //http://blog.jobbole.com/94707/
 //Ê¾ÀýÔ´Âë
 //https://github.com/pkainulainen/gradle-examples
+//https://www.petrikainulainen.net/programming/gradle/getting-started-with-gradle-creating-a-web-application-project/
 
 buildscript {
     repositories {
+        //flatDir {
+        //    dirs 'lib'
+        //}
         jcenter()
     }
     dependencies {
@@ -27,4 +31,7 @@ targetCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    //flatDir {
+    //    dirs 'lib1', 'lib2'
+    //}
 }
