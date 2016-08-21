@@ -1,18 +1,22 @@
-//GradleÈëÃÅ£¨6£©£º´´½¨WebÓ¦ÓÃÏîÄ¿
+//Gradleå…¥é—¨ï¼ˆ6ï¼‰ï¼šåˆ›å»ºWebåº”ç”¨é¡¹ç›®
 //http://blog.jobbole.com/94707/
-//Ê¾ÀıÔ´Âë
+//ç¤ºä¾‹æºç 
 //https://github.com/pkainulainen/gradle-examples
 //https://www.petrikainulainen.net/programming/gradle/getting-started-with-gradle-creating-a-web-application-project/
 
 buildscript {
     repositories {
+        //http://stackoverflow.com/questions/20700053/how-to-add-local-jar-file-dependency-to-build-gradle-file
+        //Maven æ‰‹åŠ¨æ·»åŠ  JAR åŒ…åˆ°æœ¬åœ°ä»“åº“
+        //http://www.blogjava.net/fancydeepin/archive/2012/06/12/380605.html
         //flatDir {
         //    dirs 'lib'
         //}
         jcenter()
+        mavenLocal()
     }
     dependencies {
-        classpath 'org.akhikhl.gretty:gretty:+'
+        classpath 'org.akhikhl.gretty:gretty:1.2.4'
     }
 }
 
@@ -30,8 +34,19 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 repositories {
-    mavenCentral()
+    //mavenLocal()
+    //mavenCentral()
+	maven {
+        url "http://localhost:8081/repository/maven-central/"
+	}
     //flatDir {
     //    dirs 'lib1', 'lib2'
     //}
+}
+
+
+dependencies {
+    compile 'com.jfinal:jfinal:2.2'
+    compile 'log4j:log4j:1.2.17'
+    testCompile 'junit:junit:4.11'
 }
