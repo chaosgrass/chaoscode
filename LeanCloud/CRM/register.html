@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+
+    <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+    <script>
+        function changetext(id) {
+
+            // 应用 ID，用来识别应用
+            var APP_ID = '7alskbs23551u3ywl073apx0c9t2lgmu2eusplh4pvtpcscv';
+
+            // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
+            var APP_KEY = 'h5ezxy1xlzx76vxdqc1vumgap7hezlvdzwuexu0j614ejb73';
+
+            // 初始化
+            AV.init({
+                appId: APP_ID,
+                appKey: APP_KEY
+            });
+
+            var DoctorUser = AV.Object.extend('DoctorUser');
+            var doctorObject = new DoctorUser();
+            doctorObject.save({
+                mobilePhoneNumber: '13888888888',
+				mobilePhoneVerified: false,
+				username: "Doctor Test",
+				hospital: "Shenzhen Test Hospital",
+				jobTitle: "Director of the Department of Ultrasound"
+            }).then(function () {
+                window.location.href="success.html";
+            }).catch(function (err) {
+                alert('发送失败:' + err);
+                window.location.href="failed.html";
+            });
+
+        }
+    </script>
+
+    <h1 onclick="changetext(this)">登记一个医生用户</h1>
+
+</body>
+</html>
