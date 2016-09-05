@@ -18,7 +18,7 @@
         }
         function onLoad() {
             initLeanCloud();
-            switchToPage("#register");
+            switchToPage("#registerInfo");
         }
         //错误信息
         function showErrorPage(msg) {
@@ -38,10 +38,11 @@
         */
         //查询DoctorUser并显示
         function queryDoctorUserAndShow(doctor_id) {
-            var query = new AV.Query('DoctorUser');
+            var query = new AV.Query('_User');
             query.get(doctor_id).then(function (data) {
                 showDoctorObjectInSuccess(data);
             }, function (err) {
+				console.error("Error:" + err.code + " " + err.message);
                 showErrorPage("Error:" + err.code + " " + err.message);
             })
         }
@@ -56,6 +57,7 @@
             $("#sucDepartment").html("科室:" + doctorDept);
             //showInfoMessage('注册成功:' + mobilePhoneNumber + doctorName + doctorDept + doctorHospital)
         }
+		/*
         function testLeanCloudSave(id) {
             queryAllDoctorUser();
             return;
@@ -79,6 +81,7 @@
                 //window.location.href="failed.html";
             });
         }
+		*/
 
         //查询所有用户
         function queryAllDoctorUser() {
@@ -94,6 +97,7 @@
                 //}
                 //showErrorPage(data.get('doctorName'));
             }, function(err) {
+				console.error("Error:" + err.code + " " + err.message);
                 showErrorPage("Error:" + err.code + " " + err.message);
             });
         }
@@ -126,10 +130,12 @@
                     AV.Cloud.requestSmsCode(textMobilePhoneNumber).then(function (success) {
                         console.log("AV.Cloud.requestSmsCode success, continue enter SmsVerifyCode");
                     }, function (err) {
+						console.error("Error:" + err.code + " " + err.message);
                         showErrorPage("Error:" + err.code + " " + err.message);
                     });
                 }
             }, function (err) {
+				console.error("Error:" + err.code + " " + err.message);
                 showErrorPage("Error:" + err.code + " " + err.message);
             });
         }
@@ -142,6 +148,7 @@
             AV.User.signUpOrlogInWithMobilePhone(textMobilePhoneNumber, textSmsVerifyCode).then(function (success) {
                 switchToPage("#registerInfo");
             }, function (err) {
+				console.error("Error:" + err.code + " " + err.message);
                 showErrorPage("Error:" + err.code + " " + err.message);
             });
         }
@@ -158,13 +165,15 @@
                 currentUser.set('doctorName', textDoctorName);
                 currentUser.set('doctorHospital', textDoctorHospital);
                 currentUser.set('doctorDept', textDoctorDept);
-                currentUser.save().then(function (data) {
+                currentUser.save().then(function (cur_user) {
                     switchToPage("#successTip");
-                    queryDoctorUserAndShow(data);
+                    queryDoctorUserAndShow(cur_user.id);
                 }).catch(function (err) {
+					console.error("Error:" + err.code + " " + err.message);
                     showErrorPage("Error:" + err.code + " " + err.message);
                 });
             } else {
+				console.error("AV.User.current query failed!");
                 showErrorPage("AV.User.current query failed!")
             }
         }
@@ -299,7 +308,7 @@
 
     <div align="center" style="margin:30px auto;width:100%;">
         <span class="normalFontSize" > 医&nbsp&nbsp院:</span>
-        <input class="normalFontSize" type="input" id="textHospital" vld="{required:true}"  maxlength="20" value=""/>
+        <input class="normalFontSize" type="input" id="textDoctorHospital" vld="{required:true}"  maxlength="20" value=""/>
         <span style="margin:1px;color:red;">*</span>
     </div>
 
